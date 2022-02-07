@@ -32,7 +32,7 @@ function onGalleryClick(event) {
 function modalImg(source) {
   const instance = basicLightbox.create(`  
   <div class="modal">
-       <img src="${source}" style="height:50vh; display:block"></img>
+       <img src="${source}" style="height:100vh; display:block"></img>
   </div>
 `);
   instance.show();
