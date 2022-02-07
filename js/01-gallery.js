@@ -17,11 +17,8 @@ const makeGalleryElements = ({ preview, original, description }) => {
     `;
 };
 const makeGalleryMarkup = galleryItems.map(makeGalleryElements).join("");
-
 const galleryElements = document.querySelector(".gallery");
-
 galleryElements.insertAdjacentHTML("beforeend", makeGalleryMarkup);
-
 galleryElements.addEventListener("click", onGalleryClick);
 
 function onGalleryClick(event) {
@@ -33,8 +30,7 @@ function onGalleryClick(event) {
 }
 
 function modalImg(source) {
-  const instance = basicLightbox.create(`
-    
+  const instance = basicLightbox.create(`  
   <div class="modal">
        <img src="${source}" style="height:50vh; display:block"></img>
   </div>
