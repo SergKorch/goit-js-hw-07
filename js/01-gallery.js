@@ -28,21 +28,37 @@ function onGalleryClick(event) {
   event.preventDefault();
   modalImg(event.target.dataset.source);
 }
-
+let instance;
 function modalImg(source) {
-  const instance = basicLightbox.create(`  
+  instance = basicLightbox.create(
+    `  
   <div class="modal">
        <img src="${source}" style="height:100vh; display:block"></img>
   </div>
-`);
+`,
+    {
+      onShow: instance => {
+        addListener();
+      },
+      onClose: instance => {
+        removeListener();
+      },
+    }
+  );
   instance.show();
-  escapeOut(instance);
+  // escapeOut(instance);
 }
 
-function escapeOut(escape) {
-  document.addEventListener("keydown", (event) => {
-    if (event.key) {
-      escape.close();
+function escapeOut(event) {
+  // document.addEventListener("keydown", (event) => {
+    if (event.code === 'Escape') {
+      instance.close();
     }
-  });
+  // });
+}
+function addListener() {
+  window.addEventListener("keydown", escapeOut);
+}
+function removeListener() {
+  window.removeEventListener("keydown", escapeOut);
 }
