@@ -1,6 +1,5 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
-
 const makeGalleryElements = ({ preview, original, description }) => {
   return `<div class="gallery__item">
     <a class="gallery__link" href="${original} target="_self">
@@ -21,44 +20,33 @@ const galleryElements = document.querySelector(".gallery");
 galleryElements.insertAdjacentHTML("beforeend", makeGalleryMarkup);
 galleryElements.addEventListener("click", onGalleryClick);
 
+const instance = basicLightbox.create(
+  `  
+     <img src="" class="modal" style="height:100vh; display:block"></img>
+`,
+  {
+    onShow: (instance) => {
+      window.addEventListener("keydown", escapeOut);
+    },
+    onClose: (instance) => {
+      window.removeEventListener("keydown", escapeOut);
+    },
+  }
+);
+
 function onGalleryClick(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
   event.preventDefault();
-  modalImg(event.target.dataset.source);
-}
-let instance;
-function modalImg(source) {
-  instance = basicLightbox.create(
-    `  
-  <div class="modal">
-       <img src="${source}" style="height:100vh; display:block"></img>
-  </div>
-`,
-    {
-      onShow: instance => {
-        addListener();
-      },
-      onClose: instance => {
-        removeListener();
-      },
-    }
-  );
+  instance.element().querySelector(".modal").src = event.target.dataset.source;
   instance.show();
-  // escapeOut(instance);
+  console.log(instance.element().querySelector(".modal").src);
 }
 
 function escapeOut(event) {
-  // document.addEventListener("keydown", (event) => {
-    if (event.code === 'Escape') {
-      instance.close();
-    }
-  // });
-}
-function addListener() {
-  window.addEventListener("keydown", escapeOut);
-}
-function removeListener() {
-  window.removeEventListener("keydown", escapeOut);
+  if (event.code === "Escape") {
+    instance.close();
+    return;
+  }
 }
