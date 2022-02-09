@@ -41,7 +41,6 @@ function onGalleryClick(event) {
   event.preventDefault();
   instance.element().querySelector(".modal").src = event.target.dataset.source;
   instance.show();
-  console.log(instance.element().querySelector(".modal").src);
 }
 
 function escapeOut(event) {
